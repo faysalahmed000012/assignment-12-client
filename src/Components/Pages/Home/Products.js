@@ -17,7 +17,7 @@ const Products = () => {
   }
   return (
     <div className="container mx-auto mt-5">
-      <h3 className="text-center text-4xl text-primary">
+      <h3 className="text-center text-4xl text-primary font-semibold">
         Our Products : {products?.length}
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5">
