@@ -1,7 +1,13 @@
+import { signOut } from "firebase/auth";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import auth from "../../../firebase.config";
+import noUser from "../../../assets/image/no-user-image-icon-3.jpg";
 
 const Header = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
   const navItems = (
     <>
       <li>
@@ -19,7 +25,7 @@ const Header = () => {
     </>
   );
   return (
-    <div>
+    <div className=" mx-3">
       <div class="navbar bg-base-100">
         <div class="navbar-start">
           <div class="dropdown">
@@ -41,38 +47,52 @@ const Header = () => {
             </label>
             <ul
               tabindex="0"
-              class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 gap-y-2"
             >
               {navItems}
             </ul>
           </div>
           <Link to="/" class="btn btn-ghost normal-case text-xl">
-            daisyUI
+            ElectroFirm
           </Link>
         </div>
         <div class="navbar-center hidden lg:flex">
-          <ul class="menu menu-horizontal p-0">{navItems}</ul>
+          <ul class="menu menu-horizontal p-0 gap-x-2">{navItems}</ul>
         </div>
         <div class="navbar-end">
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img src="https://api.lorem.space/image/face?hash=33791" />
-              </div>
-            </label>
-            <ul
-              tabindex="0"
-              class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a class="justify-between">Profile</a>
-              </li>
+          {user ? (
+            <div class="dropdown dropdown-end">
+              <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                <div class="w-10 rounded-full">
+                  <img src={user?.user?.photoURL || noUser} alt="" />
+                </div>
+              </label>
+              <ul
+                tabindex="0"
+                class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 gap-y-2"
+              >
+                <li>
+                  <button
+                    onClick={() => navigate("/myprofile")}
+                    class="justify-between"
+                  >
+                    Profile
+                  </button>
+                </li>
 
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
-          </div>
+                <li>
+                  <button onClick={() => signOut(auth)}>Logout</button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate("/login")}
+              className="btn uppercase"
+            >
+              Login
+            </button>
+          )}
         </div>
       </div>
     </div>

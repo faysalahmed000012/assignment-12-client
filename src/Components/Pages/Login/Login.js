@@ -1,16 +1,38 @@
 import React from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import auth from "../../../firebase.config";
+import Loading from "../../Shared/Loading/Loading";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Login = () => {
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+  let navigate = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (data) => {};
+  const onSubmit = (data) => {
+    const email = data.email;
+    const password = data.password;
+    signInWithEmailAndPassword(email, password);
+  };
+  if (loading) {
+    return <Loading></Loading>;
+  }
+  let errorElement;
+  if (error) {
+    errorElement = <p className="text-red-700 text-sm my-1">{error.message}</p>;
+  }
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <>
@@ -84,7 +106,7 @@ const Login = () => {
                   )}
                 </label>
               </div>
-              {/* {errorElement} */}
+              {errorElement}
               <input
                 className="btn btn-accent w-full max-w-xs text-white"
                 type="submit"

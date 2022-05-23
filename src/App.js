@@ -7,6 +7,7 @@ import MyProfile from "./Components/Pages/MyProfile/MyProfile";
 import NotFound from "./Components/Pages/NotFound/NotFound";
 import Signup from "./Components/Pages/Signup/Signup";
 import Header from "./Components/Shared/Header/Header";
+import RequireAuth from "./RequireAuth/RequireAuth";
 
 function App() {
   return (
@@ -16,7 +17,14 @@ function App() {
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/home" element={<Home></Home>}></Route>
         <Route path="/blogs" element={<Blogs></Blogs>}></Route>
-        <Route path="/myProfile" element={<MyProfile></MyProfile>}></Route>
+        <Route
+          path="/myProfile"
+          element={
+            <RequireAuth>
+              <MyProfile></MyProfile>
+            </RequireAuth>
+          }
+        ></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<Signup></Signup>}></Route>
         <Route

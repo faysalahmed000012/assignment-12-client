@@ -2,17 +2,42 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
+import {
+  useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
+import auth from "../../../firebase.config";
+import Loading from "../../Shared/Loading/Loading";
 
 const Signup = () => {
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const email = data.email;
+    const password = data.password;
+    const name = data.name;
+    console.log(email, password, name);
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName: name });
   };
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
+  let errorElement;
+  if (error) {
+    errorElement = <p className="text-red-700 text-sm my-1">{error.message}</p>;
+  }
+  if (user) {
+    console.log(user);
+  }
 
   return (
     <>
@@ -109,7 +134,7 @@ const Signup = () => {
                   )}
                 </label>
               </div>
-              {/* {errorElement} */}
+              {errorElement}
               <input
                 className="btn btn-accent w-full max-w-xs text-white"
                 type="submit"
