@@ -5,7 +5,7 @@
     "availableQuantity": 15911,
     "minQuantity": 100,
     "maxQuantity": 1000,
-    "product": "Electric Plas",
+    "item": "Electric Plas",
     "about": "High quality electric plas made by iron and heavy plastic. It is easy and comfortable to use.It can be used to cut electric wares also it can pull out pins and cut it.The have iron is enough to push a pin as well. You can order at minimum quantity of 100pcs."
   },
   {
@@ -14,7 +14,7 @@
     "availableQuantity": 18523,
     "minQuantity": 100,
     "maxQuantity": 1000,
-    "product": "Electric Tester",
+    "item": "Electric Tester",
     "about": "This electric tester is used to test electricity.It has a led indicator to easily check the electricity. It's flexible and made by high quality metal and plastic it will not break or shatter even if it falls from 100m high . It can also be used as a small tester."
   },
   {
@@ -23,7 +23,7 @@
     "availableQuantity": 16043,
     "minQuantity": 100,
     "maxQuantity": 1000,
-    "product": "Screwdriver",
+    "item": "Screwdriver",
     "about": "We have this heavy screwdriver made by high quality metal ,plastic and rubber. You can control normal and star type screw with two side driver. At the top of the driver, we used a weak magnet so that it can hold the screw and will not loose, this will give user a good experience."
   },
   {
@@ -32,7 +32,7 @@
     "availableQuantity": 28581,
     "minQuantity": 100,
     "maxQuantity": 1000,
-    "product": "Wrench",
+    "item": "Wrench",
     "about": "This high quality wrench can be used for gripping, fastening, turning, tightening and loosening things like pipes, pipe fittings, nuts and bolts.It is made by high quality metal and it has many different sizes . At the bottom of the wrench, we added a spinner as well"
   },
   {
@@ -41,7 +41,7 @@
     "availableQuantity": 22067,
     "minQuantity": 100,
     "maxQuantity": 1000,
-    "product": "Soldering Iron",
+    "item": "Soldering Iron",
     "about": "This is a high quality soldering iron . It has meter to measure the temp, voltage and also other useful information . We also provide a stand with it for safety reasons . You can solder safely and easily . It can heat up for use in just only 3 seconds. "
   },
   {
@@ -50,7 +50,7 @@
     "availableQuantity": 17484,
     "minQuantity": 100,
     "maxQuantity": 1000,
-    "product": "Hammer",
+    "item": "Hammer",
     "about": "This hammer is made of high quality mehegoni wood and high quality iron. It is not so heavy . User can comfortably use it . It can be used to push and pull pins, striking masonry drill and steel chisels and so on"
   }
 ]
