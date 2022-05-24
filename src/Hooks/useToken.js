@@ -6,7 +6,8 @@ const useToken = (user) => {
   useEffect(() => {
     console.log("user inside useToken", user);
     const email = user?.user?.email;
-    const currentUser = { email: email };
+    const name = user?.user?.displayName;
+    const currentUser = { email: email, name: name };
     if (email) {
       axios
         .put(`http://localhost:5000/users/${email}`, currentUser)
