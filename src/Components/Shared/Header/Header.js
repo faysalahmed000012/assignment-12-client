@@ -58,30 +58,60 @@ const Header = () => {
         </div>
         <div class="navbar-end">
           {user ? (
-            <div class="dropdown dropdown-end">
-              <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                <div class="w-10 rounded-full">
-                  <img src={user?.user?.photoURL || noUser} alt="" />
-                </div>
-              </label>
-              <ul
-                tabindex="0"
-                class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 gap-y-2"
+            <>
+              <label
+                tabindex="4"
+                for="dashboard-drawer"
+                class="btn btn-ghost lg:hidden"
               >
-                <li>
-                  <button
-                    onClick={() => navigate("/myprofile")}
-                    class="justify-between"
-                  >
-                    Profile
-                  </button>
-                </li>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </label>
 
-                <li>
-                  <button onClick={() => signOut(auth)}>Logout</button>
-                </li>
-              </ul>
-            </div>
+              <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                  <div class="w-10 rounded-full">
+                    <img src={user?.user?.photoURL || noUser} alt="" />
+                  </div>
+                </label>
+                <ul
+                  tabindex="0"
+                  class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 gap-y-2"
+                >
+                  <li>
+                    <button
+                      onClick={() => navigate("/myprofile")}
+                      class="justify-between"
+                    >
+                      Profile
+                    </button>
+                  </li>
+
+                  <li>
+                    <button
+                      onClick={() => {
+                        signOut(auth);
+                        localStorage.removeItem("accessToken");
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </>
           ) : (
             <button
               onClick={() => navigate("/login")}

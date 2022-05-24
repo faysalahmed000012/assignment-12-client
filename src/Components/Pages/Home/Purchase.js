@@ -5,12 +5,13 @@ import Loading from "../../Shared/Loading/Loading";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.config";
 import axios from "axios";
+import axiosPrivate from "../../api/axiosSecret";
 
 const Purchase = () => {
   const [user, loading] = useAuthState(auth);
   const { id } = useParams();
   const { data, isLoading, refetch } = useQuery("product", () =>
-    axios.get(`http://localhost:5000/product/${id}`)
+    axiosPrivate.get(`http://localhost:5000/product/${id}`)
   );
 
   if (isLoading || loading) {
