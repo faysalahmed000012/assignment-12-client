@@ -1,44 +1,20 @@
 import axios from "axios";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useForm } from "react-hook-form";
 import auth from "../../../firebase.config";
 import axiosPrivate from "../../api/axiosSecret";
 
 const AddReview = () => {
   const [user] = useAuthState(auth);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const imgStoreKey = "ff8cfeb26ce27734faaa78285e56b05a";
-    const url = `https://api.imgbb.com/1/upload?key=${imgStoreKey}`;
-
-    const image = event.target.image.value;
-    var file = image.split("\\");
-    var fileName = file[file.length - 1];
-    console.log(fileName);
-    const formData = new FormData();
-    formData.append("image", fileName);
-    fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        if (result.success) {
-          // const img = result.data.url;
-          // const review = {
-          //   name: user?.displayName,
-          //   email: user?.email,
-          //   ratings: event.target.ratings.value,
-          //   image: img,
-          //   comment: event.target.comment.value,
-          // };
-          // axiosPrivate
-          //   .post("http://localhost:5000/reviews", review)
-          //   .then((response) => console.log(response));
-        }
-      });
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
   };
   return (
     <div>
@@ -50,52 +26,137 @@ const AddReview = () => {
         <div class="card w-96 bg-base-100 shadow-xl">
           <div class="card-body">
             <h2 class="card-title text-centre">Give Your Review Here!</h2>
-            <form onSubmit={handleSubmit} action="">
-              <label class="label">Your Name:-</label>
-              <input
-                type="text"
-                name="name"
-                readOnly
-                placeholder="Type here"
-                value={user?.displayName}
-                class="input input-bordered w-full max-w-xs"
-              />
-              <label class="label">Your Email:-</label>
-              <input
-                type="email"
-                name="email"
-                readOnly
-                value={user?.email}
-                placeholder="Type here"
-                class="input input-bordered w-full max-w-xs"
-              />
-              <label class="label">Give Your Picture:-</label>
-
-              <input
-                name="image"
-                type="file"
-                class="input input-bordered w-full max-w-xs "
-              />
-              <label class="label">Ratings Out Of 5:-</label>
-              <input
-                name="ratings"
-                type="number"
-                max={5}
-                min={0}
-                class="input input-bordered w-full max-w-xs"
-              />
-
-              <label class="label">Your Comment:-</label>
-              <textarea
-                name="comment"
-                class="textarea textarea-bordered block w-full mb-4"
-                placeholder="Write Your Comment Here"
-              ></textarea>
-              <div class="card-actions justify-center">
-                <button type="submit" class="btn btn-primary">
-                  POST
-                </button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  {...register("name", {
+                    required: {
+                      value: true,
+                      message: "Name is Required",
+                    },
+                  })}
+                  type="text"
+                  readOnly
+                  value={user?.displayName}
+                  placeholder="Product Name"
+                  className="input input-bordered w-full max-w-xs"
+                />{" "}
+                <label className="label">
+                  {errors.name?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.name.message}
+                    </span>
+                  )}
+                </label>
               </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  {...register("email", {
+                    required: {
+                      value: true,
+
+                      message: "Email is Required",
+                    },
+                  })}
+                  type="email"
+                  readOnly
+                  value={user?.email}
+                  min={1}
+                  className="input input-bordered w-full max-w-xs"
+                />{" "}
+                <label className="label">
+                  {errors.email?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.email.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Ratings</span>
+                </label>
+                <input
+                  {...register("ratings", {
+                    required: {
+                      value: true,
+
+                      message: "Quantity is Required",
+                    },
+                  })}
+                  type="number"
+                  placeholder="Give Your Ratings"
+                  min={1}
+                  className="input input-bordered w-full max-w-xs"
+                />{" "}
+                <label className="label">
+                  {errors.ratings?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.ratings.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Your Image</span>
+                </label>
+                <input
+                  {...register("image", {
+                    required: {
+                      value: true,
+                      message: "image is Required",
+                    },
+                  })}
+                  type="file"
+                  placeholder=""
+                  className="input input-bordered w-full max-w-xs cursor-pointer"
+                />{" "}
+                <label className="label">
+                  {errors.image?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.image.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Description</span>
+                </label>
+                <textarea
+                  {...register("description", {
+                    required: {
+                      value: true,
+
+                      message: "Description is Required",
+                    },
+                  })}
+                  placeholder="Description is Required "
+                  className="textarea textarea-bordered w-full max-w-xs"
+                ></textarea>
+                <label className="label">
+                  {errors.description?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.description.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+
+              <input
+                className="btn btn-accent w-full max-w-xs text-white"
+                type="submit"
+                value="Add"
+              />
             </form>
           </div>
         </div>
