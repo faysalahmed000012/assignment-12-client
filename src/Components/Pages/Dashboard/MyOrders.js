@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
+import Swal from "sweetalert2";
 import auth from "../../../firebase.config";
 import axiosPrivate from "../../api/axiosSecret";
 import Loading from "../../Shared/Loading/Loading";
@@ -16,6 +17,26 @@ const MyOrders = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Canceled!", "Your order has been canceled.", "success");
+        axiosPrivate
+          .delete(`http://localhost:5000/order/${id}`)
+          .then((res) => console.log(res));
+        refetch();
+      }
+    });
+  };
   return (
     <div>
       <h3>All of my orders here : {orders.length}</h3>
@@ -48,7 +69,10 @@ const MyOrders = () => {
                         <button className="btn btn-xs btn-accent">pay</button>
                       </td>
                       <td>
-                        <button className="btn btn-xs btn-accent">
+                        <button
+                          onClick={() => handleDelete(order._id)}
+                          className="btn btn-xs btn-accent"
+                        >
                           Cancel
                         </button>
                       </td>
