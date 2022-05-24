@@ -5,16 +5,14 @@ import Loading from "../../Shared/Loading/Loading";
 import Product from "./Product";
 
 const Products = () => {
-  const {
-    data: products,
-    isLoading,
-    refetch,
-  } = useQuery("products", () =>
-    fetch("http://localhost:5000/products").then((res) => res.json())
+  const { data, isLoading, refetch } = useQuery("products", () =>
+    axios.get("http://localhost:5000/products")
   );
   if (isLoading) {
     return <Loading></Loading>;
   }
+  const products = data.data;
+  console.log(products);
   return (
     <div className="container mx-auto mt-5">
       <h3 className="text-center text-4xl text-primary font-semibold">
