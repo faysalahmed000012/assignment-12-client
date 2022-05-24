@@ -13,8 +13,37 @@ const AddReview = () => {
     handleSubmit,
     reset,
   } = useForm();
+  const imgStoreKey = "ff8cfeb26ce27734faaa78285e56b05a";
+  const url = `https://api.imgbb.com/1/upload?key=${imgStoreKey}`;
   const onSubmit = (data) => {
-    console.log(data);
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          const image = result.data.url;
+
+          const review = {
+            name: data.name,
+            email: data.email,
+            ratings: data.ratings,
+            image: image,
+            description: data.description,
+          };
+
+          axiosPrivate
+            .post("http://localhost:5000/reviews", review)
+            .then((res) => {
+              console.log(res);
+              reset();
+            });
+        }
+      });
   };
   return (
     <div>
@@ -32,51 +61,24 @@ const AddReview = () => {
                   <span className="label-text">Name</span>
                 </label>
                 <input
-                  {...register("name", {
-                    required: {
-                      value: true,
-                      message: "Name is Required",
-                    },
-                  })}
+                  {...register("name")}
                   type="text"
                   readOnly
                   value={user?.displayName}
-                  placeholder="Product Name"
                   className="input input-bordered w-full max-w-xs"
                 />{" "}
-                <label className="label">
-                  {errors.name?.type === "required" && (
-                    <span className="label-text-alt text-red-600">
-                      {errors.name.message}
-                    </span>
-                  )}
-                </label>
               </div>
               <div className="form-control w-full max-w-xs">
                 <label className="label">
                   <span className="label-text">Email</span>
                 </label>
                 <input
-                  {...register("email", {
-                    required: {
-                      value: true,
-
-                      message: "Email is Required",
-                    },
-                  })}
+                  {...register("email")}
                   type="email"
                   readOnly
                   value={user?.email}
-                  min={1}
                   className="input input-bordered w-full max-w-xs"
                 />{" "}
-                <label className="label">
-                  {errors.email?.type === "required" && (
-                    <span className="label-text-alt text-red-600">
-                      {errors.email.message}
-                    </span>
-                  )}
-                </label>
               </div>
               <div className="form-control w-full max-w-xs">
                 <label className="label">
@@ -87,12 +89,13 @@ const AddReview = () => {
                     required: {
                       value: true,
 
-                      message: "Quantity is Required",
+                      message: "Ratings is Required",
                     },
                   })}
                   type="number"
                   placeholder="Give Your Ratings"
                   min={1}
+                  max={5}
                   className="input input-bordered w-full max-w-xs"
                 />{" "}
                 <label className="label">
@@ -106,7 +109,7 @@ const AddReview = () => {
 
               <div className="form-control w-full max-w-xs">
                 <label className="label">
-                  <span className="label-text">Your Image</span>
+                  <span className="label-text">Your Picture</span>
                 </label>
                 <input
                   {...register("image", {
@@ -140,7 +143,7 @@ const AddReview = () => {
                       message: "Description is Required",
                     },
                   })}
-                  placeholder="Description is Required "
+                  placeholder="Description is Required"
                   className="textarea textarea-bordered w-full max-w-xs"
                 ></textarea>
                 <label className="label">
