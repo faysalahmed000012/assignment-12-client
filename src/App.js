@@ -3,6 +3,7 @@ import Blogs from "./Components/Pages/Blogs/Blogs";
 import AddReview from "./Components/Pages/Dashboard/AddReview";
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import MyItems from "./Components/Pages/Dashboard/MyItems";
+import Orders from "./Components/Pages/Dashboard/Orders";
 import Users from "./Components/Pages/Dashboard/Users";
 import Home from "./Components/Pages/Home/Home";
 import Purchase from "./Components/Pages/Home/Purchase";
@@ -41,6 +42,7 @@ function App() {
           <Route index element={<MyItems></MyItems>}></Route>
           <Route path="review" element={<AddReview></AddReview>}></Route>
           <Route path="users" element={<Users></Users>}></Route>
+          <Route path="orders" element={<Orders></Orders>}></Route>
         </Route>
         <Route
           path="/product/:id"
