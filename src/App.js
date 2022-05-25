@@ -16,7 +16,9 @@ import MyProfile from "./Components/Pages/MyProfile/MyProfile";
 import NotFound from "./Components/Pages/NotFound/NotFound";
 import Signup from "./Components/Pages/Signup/Signup";
 import Header from "./Components/Shared/Header/Header";
+import RequireAdmin from "./RequireAuth/RequireAdmin";
 import RequireAuth from "./RequireAuth/RequireAuth";
+import RequireUserOnly from "./RequireAuth/RequireUserOnly";
 
 function App() {
   return (
@@ -43,13 +45,45 @@ function App() {
           }
         >
           <Route index element={<MyOrders></MyOrders>}></Route>
-          <Route path="review" element={<AddReview></AddReview>}></Route>
-          <Route path="users" element={<Users></Users>}></Route>
-          <Route path="orders" element={<Orders></Orders>}></Route>
-          <Route path="add" element={<AddProduct></AddProduct>}></Route>
+          <Route
+            path="review"
+            element={
+              <RequireUserOnly>
+                <AddReview></AddReview>
+              </RequireUserOnly>
+            }
+          ></Route>
+          <Route
+            path="users"
+            element={
+              <RequireAdmin>
+                <Users></Users>
+              </RequireAdmin>
+            }
+          ></Route>
+          <Route
+            path="orders"
+            element={
+              <RequireAdmin>
+                <Orders></Orders>
+              </RequireAdmin>
+            }
+          ></Route>
+          <Route
+            path="add"
+            element={
+              <RequireAdmin>
+                <AddProduct></AddProduct>
+              </RequireAdmin>
+            }
+          ></Route>
           <Route
             path="manage"
-            element={<ManageProducts></ManageProducts>}
+            element={
+              <RequireAdmin>
+                <ManageProducts></ManageProducts>
+              </RequireAdmin>
+            }
           ></Route>
         </Route>
         <Route

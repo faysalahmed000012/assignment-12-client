@@ -3,6 +3,7 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.config";
+import useToken from "../../../Hooks/useToken";
 import Loading from "../../Shared/Loading/Loading";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
@@ -17,7 +18,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+  const [token] = useToken(user);
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
@@ -30,7 +31,7 @@ const Login = () => {
   if (error) {
     errorElement = <p className="text-red-700 text-sm my-1">{error.message}</p>;
   }
-  if (user) {
+  if (token) {
     navigate(from, { replace: true });
   }
 

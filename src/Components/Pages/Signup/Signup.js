@@ -8,6 +8,7 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.config";
 import Loading from "../../Shared/Loading/Loading";
+import useToken from "../../../Hooks/useToken";
 
 const Signup = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -27,6 +28,7 @@ const Signup = () => {
     await createUserWithEmailAndPassword(email, password);
     await updateProfile({ displayName: name });
   };
+  const [token] = useToken(user);
 
   if (loading) {
     return <Loading></Loading>;
@@ -35,7 +37,7 @@ const Signup = () => {
   if (error) {
     errorElement = <p className="text-red-700 text-sm my-1">{error.message}</p>;
   }
-  if (user) {
+  if (token) {
     console.log(user);
   }
 

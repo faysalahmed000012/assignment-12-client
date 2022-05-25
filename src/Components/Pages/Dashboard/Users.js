@@ -9,6 +9,15 @@ const Users = () => {
   );
   const users = data?.data;
 
+  const makeAdmin = (user) => {
+    const { email } = user;
+    axiosPrivate
+      .put(`http://localhost:5000/users/admin/${email}`)
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -33,25 +42,21 @@ const Users = () => {
                   <th>{index + 1}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>Blue</td>
+                  <td>
+                    {user.role !== "admin" && (
+                      <>
+                        <button
+                          onClick={() => makeAdmin(user)}
+                          className="btn btn-primary btn-xs"
+                        >
+                          Make Admin
+                        </button>
+                      </>
+                    )}
+                  </td>
                 </tr>
               );
             })}
-
-            {/* <!-- row 2 --> */}
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            {/* <!-- row 3 --> */}
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Tax Accountant</td>
-              <td>Red</td>
-            </tr>
           </tbody>
         </table>
       </div>
