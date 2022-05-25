@@ -24,8 +24,6 @@ const Payment = () => {
 
   return (
     <div>
-      <h3> The Order is : {order.name}</h3>
-
       <div className="flex items-center justify-center">
         <div class="card w-96 bg-base-100 shadow-xl">
           <div class="card-body">

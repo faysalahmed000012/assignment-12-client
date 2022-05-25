@@ -24,6 +24,7 @@ import RequireAdmin from "./RequireAuth/RequireAdmin";
 import RequireAuth from "./RequireAuth/RequireAuth";
 import RequireUserOnly from "./RequireAuth/RequireUserOnly";
 import Payment from "./Components/Pages/Dashboard/Payment";
+import Footer from "./Components/Shared/Footer/Footer";
 
 function App() {
   return (
@@ -117,6 +118,7 @@ function App() {
         ></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
+
       <ToastContainer />
     </div>
   );
