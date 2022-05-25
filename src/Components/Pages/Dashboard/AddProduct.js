@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axiosPrivate from "../../api/axiosSecret";
+import { toast } from "react-toastify";
 
 const AddProduct = () => {
   const {
@@ -38,6 +39,7 @@ const AddProduct = () => {
             .then((res) => {
               console.log(res);
               reset();
+              toast.success("Product Added Successfully");
             });
         }
       });

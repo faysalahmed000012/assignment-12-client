@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import auth from "../../../firebase.config";
 import axiosPrivate from "../../api/axiosSecret";
@@ -9,6 +10,7 @@ import Loading from "../../Shared/Loading/Loading";
 const MyOrders = () => {
   const [user] = useAuthState(auth);
   const email = user?.email;
+  const navigate = useNavigate();
   const url = `http://localhost:5000/orders/${email}`;
   const { data, isLoading, refetch } = useQuery("myOrders", () =>
     axiosPrivate.get(url)
@@ -63,10 +65,17 @@ const MyOrders = () => {
 
                   <td>{order.quantity}</td>
                   <td>{order.price}</td>
-                  {order.status === "unpaid" && (
+                  {order.status === "unpaid" ? (
                     <>
                       <td>
-                        <button className="btn btn-xs btn-accent">pay</button>
+                        <button
+                          onClick={() =>
+                            navigate(`/dashboard/payment/${order._id}`)
+                          }
+                          className="btn btn-xs btn-accent"
+                        >
+                          pay
+                        </button>
                       </td>
                       <td>
                         <button
@@ -76,6 +85,10 @@ const MyOrders = () => {
                           Cancel
                         </button>
                       </td>
+                    </>
+                  ) : (
+                    <>
+                      <td>transactionId: {order.transactionId}</td>
                     </>
                   )}
                 </tr>

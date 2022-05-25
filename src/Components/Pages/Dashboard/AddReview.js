@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import auth from "../../../firebase.config";
 import axiosPrivate from "../../api/axiosSecret";
+import { toast } from "react-toastify";
 
 const AddReview = () => {
   const [user] = useAuthState(auth);
@@ -41,6 +42,7 @@ const AddReview = () => {
             .then((res) => {
               console.log(res);
               reset();
+              toast.success("reaview added");
             });
         }
       });

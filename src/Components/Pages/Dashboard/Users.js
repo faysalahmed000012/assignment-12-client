@@ -2,6 +2,9 @@ import React from "react";
 import { useQuery } from "react-query";
 import axiosPrivate from "../../api/axiosSecret";
 import Loading from "../../Shared/Loading/Loading";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.config";
+import { toast } from "react-toastify";
 
 const Users = () => {
   const { data, isLoading, refetch } = useQuery("users", () =>
@@ -15,6 +18,8 @@ const Users = () => {
       .put(`http://localhost:5000/users/admin/${email}`)
       .then((res) => {
         console.log(res);
+        refetch();
+        toast.success(`Successfully Made ${user.email} An Admin`);
       });
   };
 

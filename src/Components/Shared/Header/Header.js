@@ -92,7 +92,7 @@ const Header = () => {
                 >
                   <li>
                     <button
-                      onClick={() => navigate("/myprofile")}
+                      onClick={() => navigate("/dashboard")}
                       class="justify-between"
                     >
                       Profile

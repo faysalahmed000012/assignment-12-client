@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 import {
   useCreateUserWithEmailAndPassword,
@@ -19,7 +19,8 @@ const Signup = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+  const navigate = useNavigate();
+  const [token] = useToken(user);
   const onSubmit = async (data) => {
     const email = data.email;
     const password = data.password;
@@ -28,17 +29,17 @@ const Signup = () => {
     await createUserWithEmailAndPassword(email, password);
     await updateProfile({ displayName: name });
   };
-  const [token] = useToken(user);
 
-  if (loading) {
+  if (loading || updating) {
     return <Loading></Loading>;
   }
   let errorElement;
-  if (error) {
+  if (error || updateError) {
     errorElement = <p className="text-red-700 text-sm my-1">{error.message}</p>;
   }
   if (token) {
     console.log(user);
+    navigate("/home");
   }
 
   return (

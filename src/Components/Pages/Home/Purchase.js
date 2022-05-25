@@ -17,7 +17,7 @@ const Purchase = () => {
   if (isLoading || loading) {
     return <Loading></Loading>;
   }
-  const product = data.data;
+  const product = data?.data;
   const {
     _id,
     price,
@@ -35,6 +35,7 @@ const Purchase = () => {
     const order = {
       name: event.target.name.value,
       email: event.target.email.value,
+      item: item,
       quantity: quantity,
       price: (price * 10 * (event.target.quantity.value * 10)) / 100,
       phone: event.target.phone.value,
