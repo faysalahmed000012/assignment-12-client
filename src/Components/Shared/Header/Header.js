@@ -4,10 +4,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.config";
 import noUser from "../../../assets/image/no-user-image-icon-3.jpg";
+import Loading from "../Loading/Loading";
 
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+  if (loading) {
+    return <Loading></Loading>;
+  }
   const navItems = (
     <>
       <li>
@@ -16,9 +20,11 @@ const Header = () => {
       <li>
         <Link to="/myPortfolio">My Portfolio</Link>
       </li>
-      <li>
-        <Link to="/dashboard">Dashboard</Link>
-      </li>
+      {user && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
     </>
   );
   return (
