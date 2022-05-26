@@ -7,33 +7,23 @@ import auth from "../../../firebase.config";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import axiosPrivate from "../../api/axiosSecret";
+import { toast } from "react-toastify";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const Purchase = () => {
   const [user, loading] = useAuthState(auth);
+  const [admin] = useAdmin(user);
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState("");
   const { id } = useParams();
-  // const { data, isLoading, refetch } = useQuery("product", () =>
-  //   axiosPrivate
-  //     .get(`http://localhost:5000/product/${id}`)
+  const { data, isLoading, refetch } = useQuery("product", () =>
+    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/product/${id}`)
+  );
 
-  // );
-  const [product, setProduct] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:5000/product/${id}`, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setProduct(data));
-  }, [id]);
-
-  if (loading) {
+  if (isLoading || loading) {
     return <Loading></Loading>;
   }
-  // const product = data?.data;
+  const product = data?.data;
   const {
     _id,
     price,
@@ -60,45 +50,63 @@ const Purchase = () => {
     event.preventDefault();
 
     const quantity = Number(event.target.quantity.value);
+    const total = (price * quantity).toFixed(2);
     const order = {
       name: event.target.name.value,
       email: event.target.email.value,
       item: item,
       quantity: quantity,
-      price: (price * 10 * (event.target.quantity.value * 10)) / 100,
+      price: Number(total),
       phone: event.target.phone.value,
       address: event.target.address.value,
       status: "unpaid",
     };
     const newQuantity = availableQuantity - quantity;
 
-    // const data = axios.post("http://localhost:5000/orders", order);
-    console.log(order);
+    axios
+      .post("https://secure-tundra-52994.herokuapp.com/orders", order)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Your Order Has Been Placed");
+
+          event.target.quantity.value = 0;
+          event.target.phone.value = 0;
+          event.target.address.value = "";
+          axiosPrivate
+            .put(`https://secure-tundra-52994.herokuapp.com/product/${id}`, {
+              newQuantity,
+            })
+            .then((res) => {
+              console.log(res);
+              refetch();
+            });
+        }
+      });
   };
 
   return (
     <div>
-      <div class="hero min-h-screen ">
-        <div class="hero-content flex-col lg:flex-row">
+      <div className="hero min-h-screen ">
+        <div className="hero-content flex-col lg:flex-row">
           <img
             src={picture}
-            class="max-w-sm rounded-lg shadow-2xl"
+            className="max-w-sm rounded-lg shadow-2xl"
             alt="product"
           />
           <div>
-            <h1 class="text-4xl font-bold">
+            <h1 className="text-4xl font-bold">
               Hello <span className="text-primary">{user?.displayName}</span>{" "}
               !!!
             </h1>
-            <h1 class="text-4xl font-bold">
+            <h1 className="text-4xl font-bold">
               Want to buy <span className="text-primary">{item} ?</span>
             </h1>
             <h3 className="text-3xl my-3">Detail About That Product</h3>
-            <div class="divider"></div>
+            <div className="divider"></div>
             <p>Price Per Unit: {price}</p>
             <p>Available Quantity: {availableQuantity}</p>
             <p>Minium Order Quantity: {minQuantity}</p>
-            <p class="py-6">{about}</p>
+            <p className="py-6">{about}</p>
             <p className="text-2xl font-bold text-primary">Order:-</p>
 
             <form onSubmit={handleOrder}>
@@ -110,7 +118,7 @@ const Purchase = () => {
                 name="name"
                 readOnly
                 id=""
-                class="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs"
                 value={user?.displayName}
               />
               <label htmlFor="email" className="label">
@@ -122,7 +130,7 @@ const Purchase = () => {
                 name="email"
                 readOnly
                 id=""
-                class="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs"
                 value={user?.email}
               />
               <label htmlFor="quantity" className="label">
@@ -134,7 +142,7 @@ const Purchase = () => {
                 onChange={handleQuantity}
                 placeholder={minQuantity}
                 name="quantity"
-                class="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs"
               />
               <label htmlFor="quantity" className="label text-xs ">
                 <span className="text-yellow-600">
@@ -142,6 +150,8 @@ const Purchase = () => {
                   You Can not order less than Minimum Order Quantity or more
                   than Available Quantity
                 </span>
+              </label>
+              <label htmlFor="quantity" className="label text-xs ">
                 <span className="text-red-500">{error}</span>
               </label>
 
@@ -152,7 +162,7 @@ const Purchase = () => {
               <input
                 type="number"
                 name="phone"
-                class="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs"
                 id=""
                 placeholder="Phone Number"
                 required
@@ -161,15 +171,18 @@ const Purchase = () => {
                 Your Address :-
               </label>
               <textarea
-                class="textarea textarea-bordered w-full block mb-3"
+                className="textarea textarea-bordered w-full block mb-3"
                 placeholder="Address"
                 name="address"
                 required
               ></textarea>
+              {admin && (
+                <p className="text-red-500">Admin Can not buy anything</p>
+              )}
               <button
                 type="submit"
-                disabled={disabled}
-                class={`btn btn-primary`}
+                disabled={admin || disabled}
+                className={`btn btn-primary`}
               >
                 Purchase
               </button>

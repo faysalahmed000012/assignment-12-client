@@ -11,7 +11,7 @@ const MyOrders = () => {
   const [user] = useAuthState(auth);
   const email = user?.email;
   const navigate = useNavigate();
-  const url = `http://localhost:5000/orders/${email}`;
+  const url = `https://secure-tundra-52994.herokuapp.com/orders/${email}`;
   const { data, isLoading, refetch } = useQuery("myOrders", () =>
     axiosPrivate.get(url)
   );
@@ -33,7 +33,7 @@ const MyOrders = () => {
       if (result.isConfirmed) {
         Swal.fire("Canceled!", "Your order has been canceled.", "success");
         axiosPrivate
-          .delete(`http://localhost:5000/order/${id}`)
+          .delete(`https://secure-tundra-52994.herokuapp.com/order/${id}`)
           .then((res) => console.log(res));
         refetch();
       }
@@ -41,10 +41,10 @@ const MyOrders = () => {
   };
   return (
     <div>
-      <h3>All of my orders here : {orders.length}</h3>
+      <h3>All of my orders here : {orders?.length}</h3>
 
-      <div class="overflow-x-auto">
-        <table class="table w-full">
+      <div className="overflow-x-auto">
+        <table className="table w-full">
           <thead>
             <tr>
               <th></th>
@@ -57,7 +57,7 @@ const MyOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => {
+            {orders?.map((order, index) => {
               return (
                 <tr key={order._id}>
                   <th>{index + 1}</th>

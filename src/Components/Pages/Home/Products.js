@@ -6,13 +6,13 @@ import Product from "./Product";
 
 const Products = () => {
   const { data, isLoading, refetch } = useQuery("products", () =>
-    axios.get("http://localhost:5000/products")
+    axios.get("https://secure-tundra-52994.herokuapp.com/products")
   );
   if (isLoading) {
     return <Loading></Loading>;
   }
   const products = data.data;
-  console.log(products);
+
   return (
     <div className="container mx-auto mt-5">
       <h3 className="text-center text-4xl text-primary font-semibold">

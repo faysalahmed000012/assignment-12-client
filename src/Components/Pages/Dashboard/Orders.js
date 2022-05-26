@@ -6,7 +6,7 @@ import Loading from "../../Shared/Loading/Loading";
 
 const Orders = () => {
   const { data, isLoading, refetch } = useQuery("orders", () =>
-    axiosPrivate.get(`http://localhost:5000/orders`)
+    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/orders`)
   );
   const orders = data?.data;
 
@@ -15,10 +15,12 @@ const Orders = () => {
   }
 
   const handleShipped = (id) => {
-    axiosPrivate.put(`http://localhost:5000/order/paid/${id}`).then((res) => {
-      console.log(res);
-      refetch();
-    });
+    axiosPrivate
+      .put(`https://secure-tundra-52994.herokuapp.com/order/paid/${id}`)
+      .then((res) => {
+        console.log(res);
+        refetch();
+      });
   };
 
   const handleDelete = (id) => {
@@ -34,7 +36,7 @@ const Orders = () => {
       if (result.isConfirmed) {
         Swal.fire("Canceled!", "Your order has been canceled.", "success");
         axiosPrivate
-          .delete(`http://localhost:5000/order/${id}`)
+          .delete(`https://secure-tundra-52994.herokuapp.com/order/${id}`)
           .then((res) => console.log(res));
         refetch();
       }
@@ -44,8 +46,8 @@ const Orders = () => {
     <div>
       <h3>All Orders here : {orders.length}</h3>
 
-      <div class="overflow-x-auto">
-        <table class="table w-full">
+      <div className="overflow-x-auto">
+        <table className="table w-full">
           <thead>
             <tr>
               <th></th>

@@ -8,14 +8,14 @@ import { toast } from "react-toastify";
 
 const Users = () => {
   const { data, isLoading, refetch } = useQuery("users", () =>
-    axiosPrivate.get(`http://localhost:5000/users`)
+    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/users`)
   );
   const users = data?.data;
 
   const makeAdmin = (user) => {
     const { email } = user;
     axiosPrivate
-      .put(`http://localhost:5000/users/admin/${email}`)
+      .put(`https://secure-tundra-52994.herokuapp.com/users/admin/${email}`)
       .then((res) => {
         console.log(res);
         refetch();
@@ -30,12 +30,12 @@ const Users = () => {
     <div>
       <h3>Load all users : {users.length}</h3>
 
-      <div class="overflow-x-auto">
-        <table class="table w-full">
+      <div className="overflow-x-auto">
+        <table className="table w-full">
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
+
               <th>Email</th>
               <th>Make Admin</th>
             </tr>
@@ -45,7 +45,7 @@ const Users = () => {
               return (
                 <tr key={user._id}>
                   <th>{index + 1}</th>
-                  <td>{user.name}</td>
+
                   <td>{user.email}</td>
                   <td>
                     {user.role !== "admin" && (
@@ -58,6 +58,7 @@ const Users = () => {
                         </button>
                       </>
                     )}
+                    {user.role === "admin" && "Admin"}
                   </td>
                 </tr>
               );

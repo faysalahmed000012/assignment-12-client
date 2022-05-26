@@ -6,10 +6,14 @@ const useToken = (user) => {
   useEffect(() => {
     const email = user?.user?.email;
     const name = user?.user?.displayName;
+
     const currentUser = { email: email, name: name };
     if (email) {
       axios
-        .put(`http://localhost:5000/users/${email}`, currentUser)
+        .put(
+          `https://secure-tundra-52994.herokuapp.com/users/${email}`,
+          currentUser
+        )
         .then((response) => {
           const accessToken = response.data.token;
           localStorage.setItem("accessToken", accessToken);

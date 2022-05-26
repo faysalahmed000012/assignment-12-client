@@ -35,7 +35,7 @@ const AddProduct = () => {
           };
 
           axiosPrivate
-            .post("http://localhost:5000/products", product)
+            .post("https://secure-tundra-52994.herokuapp.com/products", product)
             .then((res) => {
               console.log(res);
               reset();
@@ -50,9 +50,11 @@ const AddProduct = () => {
       <h3>Add A Product</h3>
 
       <div className="flex items-center justify-center">
-        <div class="card w-96 bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title text-center">Write Product description</h2>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title text-center">
+              Write Product description
+            </h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control w-full max-w-xs">
                 <label className="label">

@@ -11,7 +11,9 @@ import { toast } from "react-toastify";
 const EditProfile = () => {
   const [user, loading] = useAuthState(auth);
   const { data, isLoading, refetch } = useQuery("user", () =>
-    axiosPrivate.get(`http://localhost:5000/user/${user.email}`)
+    axiosPrivate.get(
+      `https://secure-tundra-52994.herokuapp.com/user/${user.email}`
+    )
   );
   const {
     register,
@@ -36,7 +38,10 @@ const EditProfile = () => {
     };
 
     axiosPrivate
-      .put(`http://localhost:5000/user/update/${user.email}`, update)
+      .put(
+        `https://secure-tundra-52994.herokuapp.com/user/update/${user.email}`,
+        update
+      )
       .then((res) => {
         console.log(res);
         reset();
@@ -52,9 +57,9 @@ const EditProfile = () => {
       <h1>Edit Your Profile</h1>
 
       <div className="flex items-center justify-center">
-        <div class="card w-96 bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title text-centre">Give Your Review Here!</h2>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title text-center">Edit Your Profile Here!</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control w-full max-w-xs">
                 <label className="label">

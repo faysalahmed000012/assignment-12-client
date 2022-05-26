@@ -33,12 +33,12 @@ const AddReview = () => {
             name: data.name,
             email: data.email,
             ratings: data.ratings,
-            image: image,
+            picture: image,
             description: data.description,
           };
 
           axiosPrivate
-            .post("http://localhost:5000/reviews", review)
+            .post("https://secure-tundra-52994.herokuapp.com/reviews", review)
             .then((res) => {
               console.log(res);
               reset();
@@ -54,9 +54,9 @@ const AddReview = () => {
       </h3>
 
       <div className="flex items-center justify-center">
-        <div class="card w-96 bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title text-centre">Give Your Review Here!</h2>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title text-centre">Give Your Review Here!</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control w-full max-w-xs">
                 <label className="label">

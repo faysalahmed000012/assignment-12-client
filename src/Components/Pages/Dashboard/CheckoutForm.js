@@ -20,7 +20,9 @@ const CheckoutForm = ({ order }) => {
 
   useEffect(() => {
     axiosPrivate
-      .post("http://localhost:5000/create-payment-intent", { price })
+      .post("https://secure-tundra-52994.herokuapp.com/create-payment-intent", {
+        price,
+      })
       .then((res) => {
         console.log(res);
         if (res?.data?.clientSecret) {
@@ -80,7 +82,7 @@ const CheckoutForm = ({ order }) => {
         transactionId: paymentIntent.id,
       };
       axiosPrivate
-        .put(`http://localhost:5000/order/${_id}`, payment)
+        .put(`https://secure-tundra-52994.herokuapp.com/order/${_id}`, payment)
         .then((res) => {
           console.log(res);
           console.log(order);

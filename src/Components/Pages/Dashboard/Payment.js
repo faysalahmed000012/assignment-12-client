@@ -14,7 +14,7 @@ const stripePromise = loadStripe(
 const Payment = () => {
   const { id } = useParams();
   const { data, isLoading, refetch } = useQuery("order", () =>
-    axiosPrivate.get(`http://localhost:5000/order/${id}`)
+    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/order/${id}`)
   );
   const order = data?.data;
 
@@ -25,9 +25,9 @@ const Payment = () => {
   return (
     <div>
       <div className="flex items-center justify-center">
-        <div class="card w-96 bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title">
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">
               Complete payment for{" "}
               <span className="text-primary">{order.item}</span>
             </h2>
@@ -36,7 +36,7 @@ const Payment = () => {
             <p className="text-yellow-500">
               NOTE: Keep Your Transaction Id After Payment
             </p>
-            <div class="divider"></div>
+            <div className="divider"></div>
 
             <div>
               <Elements stripe={stripePromise}>
