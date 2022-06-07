@@ -16,5 +16,3 @@ technologies:
 - Mongodb
 - Express js
 - jsonwebtoken
-
-*
