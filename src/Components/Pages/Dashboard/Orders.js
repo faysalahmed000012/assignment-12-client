@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axiosPrivate from "../../api/axiosSecret";
 import Loading from "../../Shared/Loading/Loading";
 
 const Orders = () => {
   const { data, isLoading, refetch } = useQuery("orders", () =>
-    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/orders`)
+    axiosPrivate.get(`http://localhost:5000/orders`)
   );
   const orders = data?.data;
 
@@ -15,12 +16,11 @@ const Orders = () => {
   }
 
   const handleShipped = (id) => {
-    axiosPrivate
-      .put(`https://secure-tundra-52994.herokuapp.com/order/paid/${id}`)
-      .then((res) => {
-        console.log(res);
-        refetch();
-      });
+    axiosPrivate.put(`http://localhost:5000/order/paid/${id}`).then((res) => {
+      console.log(res);
+      toast.success("product status changed to shipped");
+      refetch();
+    });
   };
 
   const handleDelete = (id) => {
@@ -36,7 +36,7 @@ const Orders = () => {
       if (result.isConfirmed) {
         Swal.fire("Canceled!", "Your order has been canceled.", "success");
         axiosPrivate
-          .delete(`https://secure-tundra-52994.herokuapp.com/order/${id}`)
+          .delete(`http://localhost:5000/order/${id}`)
           .then((res) => console.log(res));
         refetch();
       }

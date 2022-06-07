@@ -17,7 +17,7 @@ const Purchase = () => {
   const [error, setError] = useState("");
   const { id } = useParams();
   const { data, isLoading, refetch } = useQuery("product", () =>
-    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/product/${id}`)
+    axiosPrivate.get(`http://localhost:5000/product/${id}`)
   );
 
   if (isLoading || loading) {
@@ -63,25 +63,23 @@ const Purchase = () => {
     };
     const newQuantity = availableQuantity - quantity;
 
-    axios
-      .post("https://secure-tundra-52994.herokuapp.com/orders", order)
-      .then((res) => {
-        if (res.status === 200) {
-          toast.success("Your Order Has Been Placed");
+    axios.post("http://localhost:5000/orders", order).then((res) => {
+      if (res.status === 200) {
+        toast.success("Your Order Has Been Placed");
 
-          event.target.quantity.value = 0;
-          event.target.phone.value = 0;
-          event.target.address.value = "";
-          axiosPrivate
-            .put(`https://secure-tundra-52994.herokuapp.com/product/${id}`, {
-              newQuantity,
-            })
-            .then((res) => {
-              console.log(res);
-              refetch();
-            });
-        }
-      });
+        event.target.quantity.value = 0;
+        event.target.phone.value = 0;
+        event.target.address.value = "";
+        axiosPrivate
+          .put(`http://localhost:5000/product/${id}`, {
+            newQuantity,
+          })
+          .then((res) => {
+            console.log(res);
+            refetch();
+          });
+      }
+    });
   };
 
   return (

@@ -14,7 +14,7 @@ const stripePromise = loadStripe(
 const Payment = () => {
   const { id } = useParams();
   const { data, isLoading, refetch } = useQuery("order", () =>
-    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/order/${id}`)
+    axiosPrivate.get(`http://localhost:5000/order/${id}`)
   );
   const order = data?.data;
 

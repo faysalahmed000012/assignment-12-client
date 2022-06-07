@@ -8,14 +8,14 @@ import { toast } from "react-toastify";
 
 const Users = () => {
   const { data, isLoading, refetch } = useQuery("users", () =>
-    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/users`)
+    axiosPrivate.get(`http://localhost:5000/users`)
   );
   const users = data?.data;
 
   const makeAdmin = (user) => {
     const { email } = user;
     axiosPrivate
-      .put(`https://secure-tundra-52994.herokuapp.com/users/admin/${email}`)
+      .put(`http://localhost:5000/users/admin/${email}`)
       .then((res) => {
         console.log(res);
         refetch();

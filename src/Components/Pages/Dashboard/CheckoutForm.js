@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { async } from "@firebase/util";
+
 import axiosPrivate from "../../api/axiosSecret";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.config";
 import Loading from "../../Shared/Loading/Loading";
+import { toast } from "react-toastify";
 
 const CheckoutForm = ({ order }) => {
   const stripe = useStripe();
@@ -16,11 +17,11 @@ const CheckoutForm = ({ order }) => {
   const [transactionId, setTransactionId] = useState("");
   const [user, loading] = useAuthState(auth);
 
-  const { _id, price, item, email } = order;
+  const { _id, price } = order;
 
   useEffect(() => {
     axiosPrivate
-      .post("https://secure-tundra-52994.herokuapp.com/create-payment-intent", {
+      .post("http://localhost:5000/create-payment-intent", {
         price,
       })
       .then((res) => {
@@ -48,7 +49,7 @@ const CheckoutForm = ({ order }) => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -76,13 +77,14 @@ const CheckoutForm = ({ order }) => {
       setProcessing(false);
       setTransactionId(paymentIntent.id);
       setSuccess("Congratulation!! You have successfully done your payment");
+      toast.success("Congratulation!! Your Payment Id Done");
 
       const payment = {
         order: _id,
         transactionId: paymentIntent.id,
       };
       axiosPrivate
-        .put(`https://secure-tundra-52994.herokuapp.com/order/${_id}`, payment)
+        .put(`http://localhost:5000/order/${_id}`, payment)
         .then((res) => {
           console.log(res);
           console.log(order);

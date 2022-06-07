@@ -7,14 +7,12 @@ const useAdmin = (user) => {
   useEffect(() => {
     const email = user?.email;
     if (email) {
-      axiosPrivate
-        .get(`https://secure-tundra-52994.herokuapp.com/admin/${email}`)
-        .then((res) => {
-          console.log(res);
-          setAdmin(res.data.admin);
-          setAdminLoading(false);
-        });
-      //   fetch(`https://secure-tundra-52994.herokuapp.com/admin/${email}`, {
+      axiosPrivate.get(`http://localhost:5000/admin/${email}`).then((res) => {
+        console.log(res);
+        setAdmin(res.data.admin);
+        setAdminLoading(false);
+      });
+      //   fetch(`http://localhost:5000/admin/${email}`, {
       //     method: "GET",
       //     headers: {
       //       "content-type": "application/json",

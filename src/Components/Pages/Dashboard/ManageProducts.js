@@ -8,7 +8,7 @@ import Products from "../Home/Products";
 
 const ManageProducts = () => {
   const { data, isLoading, refetch } = useQuery("products", () =>
-    axios.get(`https://secure-tundra-52994.herokuapp.com/products`)
+    axios.get(`http://localhost:5000/products`)
   );
   const products = data?.data;
 
@@ -25,7 +25,7 @@ const ManageProducts = () => {
       if (result.isConfirmed) {
         Swal.fire("Removed!", "This Item Has Been Removed.", "success");
         axiosPrivate
-          .delete(`https://secure-tundra-52994.herokuapp.com/product/${id}`)
+          .delete(`http://localhost:5000/product/${id}`)
           .then((res) => console.log(res));
         refetch();
       }

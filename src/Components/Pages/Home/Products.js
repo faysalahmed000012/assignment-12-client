@@ -6,7 +6,7 @@ import Product from "./Product";
 
 const Products = () => {
   const { data, isLoading, refetch } = useQuery("products", () =>
-    axios.get("https://secure-tundra-52994.herokuapp.com/products")
+    axios.get("http://localhost:5000/products")
   );
   if (isLoading) {
     return <Loading></Loading>;

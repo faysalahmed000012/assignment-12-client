@@ -11,7 +11,7 @@ const MyOrders = () => {
   const [user] = useAuthState(auth);
   const email = user?.email;
   const navigate = useNavigate();
-  const url = `https://secure-tundra-52994.herokuapp.com/orders/${email}`;
+  const url = `http://localhost:5000/orders/${email}`;
   const { data, isLoading, refetch } = useQuery("myOrders", () =>
     axiosPrivate.get(url)
   );
@@ -33,7 +33,7 @@ const MyOrders = () => {
       if (result.isConfirmed) {
         Swal.fire("Canceled!", "Your order has been canceled.", "success");
         axiosPrivate
-          .delete(`https://secure-tundra-52994.herokuapp.com/order/${id}`)
+          .delete(`http://localhost:5000/order/${id}`)
           .then((res) => console.log(res));
         refetch();
       }

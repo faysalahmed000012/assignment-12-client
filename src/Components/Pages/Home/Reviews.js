@@ -5,7 +5,7 @@ import Loading from "../../Shared/Loading/Loading";
 
 const Reviews = () => {
   const { data, isLoading, refetch } = useQuery("review", () =>
-    axios.get("https://secure-tundra-52994.herokuapp.com/reviews")
+    axios.get("http://localhost:5000/reviews")
   );
 
   const reviews = data?.data;

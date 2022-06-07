@@ -35,7 +35,7 @@ const AddProduct = () => {
           };
 
           axiosPrivate
-            .post("https://secure-tundra-52994.herokuapp.com/products", product)
+            .post("http://localhost:5000/products", product)
             .then((res) => {
               console.log(res);
               reset();

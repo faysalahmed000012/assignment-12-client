@@ -6,8 +6,15 @@ technologies:
 
 - React
 - React Router
-- Firebase
+
+* TailwindCss
+* DaisyUi
+* React Hook Form
+
+- Firebase Auth
 - Node js
 - Mongodb
 - Express js
 - jsonwebtoken
+
+*

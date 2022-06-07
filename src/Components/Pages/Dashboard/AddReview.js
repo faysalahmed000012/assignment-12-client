@@ -38,7 +38,7 @@ const AddReview = () => {
           };
 
           axiosPrivate
-            .post("https://secure-tundra-52994.herokuapp.com/reviews", review)
+            .post("http://localhost:5000/reviews", review)
             .then((res) => {
               console.log(res);
               reset();

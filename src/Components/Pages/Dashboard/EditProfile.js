@@ -11,9 +11,7 @@ import { toast } from "react-toastify";
 const EditProfile = () => {
   const [user, loading] = useAuthState(auth);
   const { data, isLoading, refetch } = useQuery("user", () =>
-    axiosPrivate.get(
-      `https://secure-tundra-52994.herokuapp.com/user/${user.email}`
-    )
+    axiosPrivate.get(`http://localhost:5000/user/${user.email}`)
   );
   const {
     register,
@@ -38,10 +36,7 @@ const EditProfile = () => {
     };
 
     axiosPrivate
-      .put(
-        `https://secure-tundra-52994.herokuapp.com/user/update/${user.email}`,
-        update
-      )
+      .put(`http://localhost:5000/user/update/${user.email}`, update)
       .then((res) => {
         console.log(res);
         reset();

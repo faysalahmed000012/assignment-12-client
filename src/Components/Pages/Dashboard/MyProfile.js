@@ -12,7 +12,7 @@ const MyProfile = () => {
   const email = user.email;
   const navigate = useNavigate();
   const { data, isLoading, refetch } = useQuery("user", () =>
-    axiosPrivate.get(`https://secure-tundra-52994.herokuapp.com/user/${email}`)
+    axiosPrivate.get(`http://localhost:5000/user/${email}`)
   );
 
   if (isLoading || loading) {
