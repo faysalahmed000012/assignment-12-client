@@ -3,10 +3,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import auth from "../../../firebase.config";
 import axiosPrivate from "../../api/axiosSecret";
 import Loading from "../../Shared/Loading/Loading";
-import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const [user, loading] = useAuthState(auth);

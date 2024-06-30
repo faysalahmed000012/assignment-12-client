@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosPrivate from "../Components/api/axiosSecret";
 
 const useAdmin = (user) => {
@@ -8,7 +8,7 @@ const useAdmin = (user) => {
     const email = user?.email;
     if (email) {
       axiosPrivate.get(`http://localhost:5000/admin/${email}`).then((res) => {
-        console.log(res);
+        // console.log(res);
         setAdmin(res.data.admin);
         setAdminLoading(false);
       });

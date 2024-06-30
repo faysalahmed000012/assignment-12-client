@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import axiosPrivate from "../../api/axiosSecret";
 import Loading from "../../Shared/Loading/Loading";
+import axiosPrivate from "../../api/axiosSecret";
 
 const Orders = () => {
   const { data, isLoading, refetch } = useQuery("orders", () =>
@@ -26,7 +26,6 @@ const Orders = () => {
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
-
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

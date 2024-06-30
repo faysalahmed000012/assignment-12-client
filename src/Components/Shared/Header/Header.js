@@ -2,8 +2,8 @@ import { signOut } from "firebase/auth";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
-import auth from "../../../firebase.config";
 import noUser from "../../../assets/image/no-user-image-icon-3.jpg";
+import auth from "../../../firebase.config";
 import Loading from "../Loading/Loading";
 
 const Header = () => {
@@ -42,8 +42,8 @@ const Header = () => {
               >
                 <path
                   strokeLinecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
                 />
               </svg>
@@ -79,8 +79,8 @@ const Header = () => {
                 >
                   <path
                     strokeLinecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M4 6h16M4 12h8m-8 6h16"
                   />
                 </svg>

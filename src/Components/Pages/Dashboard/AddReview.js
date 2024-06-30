@@ -1,10 +1,9 @@
-import axios from "axios";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import auth from "../../../firebase.config";
 import axiosPrivate from "../../api/axiosSecret";
-import { toast } from "react-toastify";
 
 const AddReview = () => {
   const [user] = useAuthState(auth);
